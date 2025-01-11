@@ -7,7 +7,7 @@ VALUES
 INSERT INTO Addresses (street, city, building_number, flat_number, postal_code, country, description, type) 
 VALUES 
 ('Main Street', 'New York', 123, NULL, '10001', 'USA', 'Billing address', 'house'),
-('Elm Street', 'Chicago', 45, 12, '60614', 'USA', 'Shipping address', 'apartment'),
+('Elm Street', 'Chicago', 45, 12, '60614', 'USA', 'Shipping address', 'shop'),
 ('Market Street', 'Los Angeles', 78, NULL, '90001', 'USA', 'Parcel locker at the mall', 'parcel locker');
 
 INSERT INTO Customers (name, surname, email, phone_number, shipping_address_id, billing_address_id) 
