@@ -222,3 +222,44 @@ Ocenie podlega zarówno współpraca zespołowa, jak i indywidualny wkład.
   - `customer_id` references `customer_id` in the `Customers` table, associating the invoice with a customer.
   - `order_id` references `order_id` in the `Orders` table, linking the invoice to a specific order.
   - `billing_address_id` and `shipping_address_id` reference `address_id` in the `Addresses` table, associating the invoice with appropriate addresses.
+
+### Example SELECT queries
+**1. Retrieve all products with their current price and category**
+```sql
+SELECT product_id, name, actual_price, category FROM Products;
+```
+**2. Retrieve all customers with their email and phone_number**
+```sql
+SELECT name, surname, email, phone_number FROM customers;
+```
+**3. Retrieve all customers with billing or shipping addresses**
+``` sql
+ SELECT c.name, c.surname, a.* FROM customers c JOIN addresses a ON c.billing_address_id = a.address_id;
+ SELECT c.name, c.surname, a.* FROM customers c JOIN addresses a ON c.shipping_address_id = a.address_id;
+```
+**4. Retrieve all opinions with user name, user surname and rated product name**
+``` sql
+SELECT c.name, c.surname, p.name AS "rated product name", o.comment, o.rating FROM opinions o
+JOIN products p USING(product_id)
+JOIN customers c USING(customer_id);
+```
+**5. Retrieve products with the most opinions and with average rating**
+```sql
+SELECT p.name, count(o.comment) AS "number of opinions", ROUND(AVG(o.rating), 2) AS "average rating" FROM products p
+JOIN opinions o USING(product_id)
+GROUP BY p.name ORDER BY count(o.comment) desc;
+```
+**6. Retrieve orders with payment status**
+```sql
+SELECT o.order_id, o.order_date, p.payment_status FROM orders o JOIN payments p ON o.order_id = p.order_id;
+```
+**7. Retrieve highest-paying customer**
+```sql
+SELECT c.name, SUM(p.amount) AS total_spent FROM customers c
+JOIN orders o  USING(customer_id) JOIN payments p USING(order_id)
+GROUP BY c.customer_id ORDER BY total_spent DESC LIMIT 1;
+```
+
+
+
+
