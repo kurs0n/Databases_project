@@ -41,3 +41,6 @@ INSERT INTO Invoices (customer_id, order_id, invoice_number, invoice_date, due_d
 VALUES 
 (1, 1, 'INV-2025-001', '2025-01-10', '2025-01-20', 1, 2, 20.00, 3.00, 2.00, 'Paid', 'Paid via card.'),
 (2, 2, 'INV-2025-002', '2025-01-09', '2025-01-19', 1, 3, 50.00, 5.00, 0.00, 'Paid', 'Paid via PayPal.');
+
+ALTER TABLE Opinions
+ADD CONSTRAINT unique_product_customer_opinion UNIQUE (product_id, customer_id);
