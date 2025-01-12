@@ -227,6 +227,62 @@ Ocenie podlega zarówno współpraca zespołowa, jak i indywidualny wkład.
 
 ![base](https://github.com/user-attachments/assets/3b02640a-3e8d-4044-8198-afb12b3b208c)
 
+### Views for the Database
+
+**1. View: View_Orders_Customers**
+
+| Field Name         | Data Type        | Description                                    |
+|--------------------|------------------|------------------------------------------------|
+| `order_id`         | `INT`            | Unique identifier for the order.               |
+| `order_date`       | `DATE`           | The date when the order was placed.            |
+| `order_status`     | `VARCHAR(20)`    | The current status of the order.               |
+| `customer_name`    | `VARCHAR(25)`    | The first name of the customer.                |
+| `customer_surname` | `VARCHAR(25)`    | The surname of the customer.                   |
+| `customer_email`   | `VARCHAR(50)`    | The email address of the customer.             |
+
+**Description**:  
+This view retrieves information about orders along with customer details. It joins the `Orders` table with the `Customers` table, displaying order ID, order date, status, and the customer's name, surname, and email.
+
+---
+
+**2. View: view_invoices**
+
+| Field Name         | Data Type        | Description                                    |
+|--------------------|------------------|------------------------------------------------|
+| `invoice_id`       | `INT`            | Unique identifier for the invoice.             |
+| `invoice_number`   | `VARCHAR(50)`    | Unique number assigned to the invoice.         |
+| `invoice_date`     | `DATE`           | The date when the invoice was created.         |
+| `due_date`         | `DATE`           | The due date for payment of the invoice.       |
+| `total_amount`     | `DECIMAL(10, 2)` | The total amount for the invoice.              |
+| `tax_amount`       | `DECIMAL(10, 2)` | The tax amount applied to the invoice.         |
+| `discount_amount`  | `DECIMAL(10, 2)` | The discount applied to the invoice.           |
+| `invoice_status`   | `VARCHAR(10)`    | The current status of the invoice.             |
+| `customer_name`    | `VARCHAR(25)`    | The first name of the customer.                |
+| `customer_surname` | `VARCHAR(25)`    | The surname of the customer.                   |
+| `order_date`       | `DATE`           | The date when the associated order was placed. |
+
+**Description**:  
+This view retrieves information about invoices along with associated customer and order details. It joins the `Invoices` table with the `Customers` table and optionally with the `Orders` table to display invoice details such as total amount, tax, discount, status, and customer information.
+
+---
+
+**3. View: view_products_inventory**
+
+| Field Name         | Data Type        | Description                                    |
+|--------------------|------------------|------------------------------------------------|
+| `product_id`       | `INT`            | Unique identifier for the product.             |
+| `product_name`     | `VARCHAR(25)`    | The name of the product.                       |
+| `description`      | `TEXT`           | A detailed description of the product.         |
+| `actual_price`     | `DECIMAL(10, 2)` | The current price of the product.              |
+| `category`         | `VARCHAR(50)`    | The category to which the product belongs.     |
+| `size`             | `VARCHAR(10)`    | The size of the product.                       |
+| `stock_quantity`   | `INT`            | The quantity of the product in stock.          |
+| `last_updated`     | `DATE`           | The date when the inventory was last updated.  |
+
+**Description**:  
+This view combines data from the `Products` and `Inventory` tables to display detailed information about products along with their stock levels. It shows product name, description, category, price, size, and current stock quantity.
+
+---
 
 
 ### Example SELECT queries
