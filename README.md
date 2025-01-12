@@ -223,6 +223,12 @@ Ocenie podlega zarówno współpraca zespołowa, jak i indywidualny wkład.
   - `order_id` references `order_id` in the `Orders` table, linking the invoice to a specific order.
   - `billing_address_id` and `shipping_address_id` reference `address_id` in the `Addresses` table, associating the invoice with appropriate addresses.
 
+### Diagram ERD
+
+![base](https://github.com/user-attachments/assets/3b02640a-3e8d-4044-8198-afb12b3b208c)
+
+
+
 ### Example SELECT queries
 **1. Retrieve all products with their current price and category**
 ```sql
@@ -259,6 +265,7 @@ SELECT c.name, SUM(p.amount) AS total_spent FROM customers c
 JOIN orders o  USING(customer_id) JOIN payments p USING(order_id)
 GROUP BY c.customer_id ORDER BY total_spent DESC LIMIT 1;
 ```
+...
 
 
 
