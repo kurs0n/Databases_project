@@ -40,11 +40,11 @@ Ocenie podlega zarówno współpraca zespołowa, jak i indywidualny wkład.
 * Wysokiej jakości dokumentacja, obejmująca m.in. szczegóły implementacji i studium przypadku użytkownika
 * Prezentacja projektu (obowiązkowa dla uzyskania oceny 5,0)
 
-## Dokumentacja
+# Dokumentacja
 
-### Database structure
+## Database structure
 
- **Table: Products**
+### **Table: Products**
 
 | Field Name         | Data Type         | Length | Description                                                                 |
 |--------------------|-------------------|--------|-----------------------------------------------------------------------------|
@@ -66,7 +66,9 @@ Ocenie podlega zarówno współpraca zespołowa, jak i indywidualny wkład.
 - **Precision in Prices**: Both `regular_price` and `actual_price` columns support up to 10 total digits with 2 digits after the decimal point (e.g., `99999999.99`).
 - **Constraints**: The `sex` column is restricted to one of the following values: `Male`, `Female`, or `Unisex` using a `CHECK` constraint.
 
-**Table: Addresses**
+---
+
+### **Table: Addresses**
 
 | Field Name        | Data Type        | Length | Description                                                              |
 |-------------------|------------------|--------|--------------------------------------------------------------------------|
@@ -87,7 +89,9 @@ Ocenie podlega zarówno współpraca zespołowa, jak i indywidualny wkład.
 - **Constraints**: The `type` column can only contain one of the following values: `house`, `parcel locker`, or `shop` using a `CHECK` constraint.
 - **Length Restrictions**: The `street`, `city`, and `country` columns can hold up to 50 characters, and the `postal_code` column can hold up to 10 characters.
 
-**Table: Customers**
+---
+
+### **Table: Customers**
 
 | Field Name           | Data Type        | Length | Description                                                           |
 |----------------------|------------------|--------|-----------------------------------------------------------------------|
@@ -109,7 +113,9 @@ Ocenie podlega zarówno współpraca zespołowa, jak i indywidualny wkład.
   - `billing_address_id` references `address_id` in the `Addresses` table to associate a customer with a billing address.
 - **Length Restrictions**: The `name` and `surname` columns can hold up to 25 characters, and the `email` column can hold up to 50 characters.
 
-**Table: Orders**
+---
+
+### **Table: Orders**
 
 | Field Name    | Data Type        | Length | Description                                                                 |
 |---------------|------------------|--------|-----------------------------------------------------------------------------|
@@ -125,8 +131,10 @@ Ocenie podlega zarówno współpraca zespołowa, jak i indywidualny wkład.
 - **Constraints**: The `status` column can only contain one of the following values: `Pending`, `Completed`, or `Cancelled` using a `CHECK` constraint.
 - **Foreign Key**: 
   - `customer_id` references `customer_id` in the `Customers` table, establishing a relationship between orders and customers.
-  
-**Table: Payments**
+
+---
+
+### **Table: Payments**
 
 | Field Name       | Data Type         | Length | Description                                                                 |
 |------------------|-------------------|--------|-----------------------------------------------------------------------------|
@@ -146,8 +154,10 @@ Ocenie podlega zarówno współpraca zespołowa, jak i indywidualny wkład.
   - The `payment_method` column can only contain one of the following values: `blik`, `card`, `paypal`, `sms`, or `voucher`.
 - **Foreign Key**: 
   - `order_id` references `order_id` in the `Orders` table, ensuring that each payment is associated with a valid order.
-  
-**Table: Inventory**
+
+---
+
+### **Table: Inventory**
 
 | Field Name       | Data Type        | Length | Description                                                               |
 |------------------|------------------|--------|---------------------------------------------------------------------------|
@@ -165,8 +175,10 @@ Ocenie podlega zarówno współpraca zespołowa, jak i indywidualny wkład.
   - The `last_updated` column defaults to the current date if no value is provided.
 - **Foreign Key**: 
   - `product_id` references `product_id` in the `Products` table, establishing a relationship between inventory records and products.
-    
-**Table: Opinions**
+
+---
+
+### **Table: Opinions**
 
 | Field Name    | Data Type         | Length | Description                                                               |
 |---------------|-------------------|--------|---------------------------------------------------------------------------|
@@ -187,7 +199,9 @@ Ocenie podlega zarówno współpraca zespołowa, jak i indywidualny wkład.
   - `product_id` references `product_id` in the `Products` table, ensuring that each opinion is associated with a valid product.
   - `customer_id` references `customer_id` in the `Customers` table, ensuring that each opinion is associated with a valid customer.
 
-**Table: Invoices**
+---
+
+### **Table: Invoices**
 
 | Field Name           | Data Type        | Length | Description                                                                 |
 |----------------------|------------------|--------|-----------------------------------------------------------------------------|
@@ -223,13 +237,13 @@ Ocenie podlega zarówno współpraca zespołowa, jak i indywidualny wkład.
   - `order_id` references `order_id` in the `Orders` table, linking the invoice to a specific order.
   - `billing_address_id` and `shipping_address_id` reference `address_id` in the `Addresses` table, associating the invoice with appropriate addresses.
 
-### Diagram ERD
+## Diagram ERD
 
 ![base](https://github.com/user-attachments/assets/3b02640a-3e8d-4044-8198-afb12b3b208c)
 
-### Views for the Database
+## Views for the Database
 
-**1. View: View_Orders_Customers**
+### **1. View: View_Orders_Customers**
 
 | Field Name         | Data Type        | Description                                    |
 |--------------------|------------------|------------------------------------------------|
@@ -245,7 +259,7 @@ This view retrieves information about orders along with customer details. It joi
 
 ---
 
-**2. View: view_invoices**
+### **2. View: view_invoices**
 
 | Field Name         | Data Type        | Description                                    |
 |--------------------|------------------|------------------------------------------------|
@@ -266,7 +280,7 @@ This view retrieves information about invoices along with associated customer an
 
 ---
 
-**3. View: view_products_inventory**
+### **3. View: view_products_inventory**
 
 | Field Name         | Data Type        | Description                                    |
 |--------------------|------------------|------------------------------------------------|
@@ -285,37 +299,37 @@ This view combines data from the `Products` and `Inventory` tables to display de
 ---
 
 
-### Example SELECT queries
-**1. Retrieve all products with their current price and category**
+## Example SELECT queries
+### **1. Retrieve all products with their current price and category**
 ```sql
 SELECT product_id, name, actual_price, category FROM Products;
 ```
-**2. Retrieve all customers with their email and phone_number**
+### **2. Retrieve all customers with their email and phone_number**
 ```sql
 SELECT name, surname, email, phone_number FROM customers;
 ```
-**3. Retrieve all customers with billing or shipping addresses**
+### **3. Retrieve all customers with billing or shipping addresses**
 ``` sql
  SELECT c.name, c.surname, a.* FROM customers c JOIN addresses a ON c.billing_address_id = a.address_id;
  SELECT c.name, c.surname, a.* FROM customers c JOIN addresses a ON c.shipping_address_id = a.address_id;
 ```
-**4. Retrieve all opinions with user name, user surname and rated product name**
+### **4. Retrieve all opinions with user name, user surname and rated product name**
 ``` sql
 SELECT c.name, c.surname, p.name AS "rated product name", o.comment, o.rating FROM opinions o
 JOIN products p USING(product_id)
 JOIN customers c USING(customer_id);
 ```
-**5. Retrieve products with the most opinions and with average rating**
+### **5. Retrieve products with the most opinions and with average rating**
 ```sql
 SELECT p.name, count(o.comment) AS "number of opinions", ROUND(AVG(o.rating), 2) AS "average rating" FROM products p
 JOIN opinions o USING(product_id)
 GROUP BY p.name ORDER BY count(o.comment) desc;
 ```
-**6. Retrieve orders with payment status**
+### **6. Retrieve orders with payment status**
 ```sql
 SELECT o.order_id, o.order_date, p.payment_status FROM orders o JOIN payments p ON o.order_id = p.order_id;
 ```
-**7. Retrieve highest-paying customer**
+### **7. Retrieve highest-paying customer**
 ```sql
 SELECT c.name, SUM(p.amount) AS total_spent FROM customers c
 JOIN orders o  USING(customer_id) JOIN payments p USING(order_id)
