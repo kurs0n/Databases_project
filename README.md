@@ -134,6 +134,27 @@ Ocenie podlega zarówno współpraca zespołowa, jak i indywidualny wkład.
 
 ---
 
+### **Table: Order Items**
+
+| Field Name        | Data Type         | Length | Description                                                          |
+|-------------------|-------------------|--------|----------------------------------------------------------------------|
+| `order_item_id`   | `SERIAL`          | -      | Unique identifier for each item in the order.                        |
+| `order_id`        | `INT`             | -      | Foreign key referencing the order in the `Orders` table.             |
+| `product_id`      | `INT`             | -      | Foreign key referencing the product in the `Products` table.         |
+| `quantity`        | `INT`             | -      | The quantity of the product ordered (required).                      |
+| `product_price`   | `DECIMAL(10, 2)`  | -      | The price of the product at the time of the order (required).         |
+
+---
+
+### **Notes**:
+- **Primary Key**: The `order_item_id` column uniquely identifies each record in the table.
+- **Mandatory Fields**: The `order_id`, `product_id`, `quantity`, and `product_price` columns must have values (`NOT NULL` constraint).
+- **Foreign Keys**:
+  - `order_id` references `order_id` in the `Orders` table, establishing a relationship between the order and its items.
+  - `product_id` references `product_id` in the `Products` table, linking the item to a specific product.
+
+---
+
 ### **Table: Payments**
 
 | Field Name       | Data Type         | Length | Description                                                                 |
