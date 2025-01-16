@@ -15,17 +15,17 @@ $$ LANGUAGE plpgsql;
 --     SELECT calculate_average_rating(1); -- Replace 1 with the actual product ID
 
 CREATE OR REPLACE FUNCTION calculate_order_total(order_id_input INT)
-RETURNS DECIMAL(10, 2) AS $$
-DECLARE
-    total_amount DECIMAL(10, 2);
-BEGIN
-   SELECT SUM(quantity*product_price)
-    INTO total_amount
-    FROM order_items oi
-    WHERE order_id = order_id_input;
-    RETURN total_amount;
-END;
-$$ LANGUAGE plpgsql;
+    RETURNS DECIMAL(10, 2) AS $$
+    DECLARE
+        total_amount DECIMAL(10, 2);
+    BEGIN
+       SELECT SUM(quantity*product_price)
+        INTO total_amount
+        FROM order_items oi
+        WHERE order_id = order_id_input;
+        RETURN total_amount;
+    END;
+    $$ LANGUAGE plpgsql;
 
 --  SELECT calculate_order_total(1); -- Replace 1 with the actual order ID
 
