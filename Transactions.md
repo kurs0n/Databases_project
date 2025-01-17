@@ -71,7 +71,7 @@ This section outlines the transaction examples demonstrated in the `transactions
     *   **Functionality:** This transaction checks if an order has a payment and creates an invoice for that order.
     *   **Use Case:** Shows a multi-step process inside a transaction to maintain consistency between different entities in the database (payment, order, invoice).
      *    **Example:**
-        ```sql
+    ```sql
         BEGIN;
             -- Step 1: Check if the order has a payment
             SELECT payment_status FROM payments WHERE order_id = 1;
@@ -82,7 +82,7 @@ This section outlines the transaction examples demonstrated in the `transactions
         
         
         COMMIT;
-        ```
+    ```
 
 6. **Transaction for Adding a Customer with Addresses:**
    * **Functionality:** Adds a new customer along with their billing and shipping addresses within a single transaction.
@@ -212,8 +212,7 @@ This section outlines the transaction examples demonstrated in the `transactions
 *   **Error Handling:** Allows for the rollback of operations when errors occur, maintaining data correctness.
 *  **Flexibility:** Demonstrates different isolation levels and methods to achieve the right balance between data integrity and performance.
 
-### How to Use
 
-1.  These examples serve as a guide on how to structure transactions in your application code, to ensure that data changes are grouped into atomic operations, and are performed correctly using different isolation levels.
-2.  Use proper error handling in your application logic and make sure to roll back the transaction if anything goes wrong.
+These examples serve as a guide on how to structure transactions in your application code, to ensure that data changes are grouped into atomic operations, and are performed correctly using different isolation levels.
+
 
