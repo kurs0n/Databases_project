@@ -23,7 +23,7 @@ This section outlines the transaction examples demonstrated in the `transactions
     *   **Functionality:** This transaction updates inventory and adds an order item, ensuring consistent inventory levels.
     *   **Use Case:** Demonstrates how to use the `REPEATABLE READ` isolation level to prevent non-repeatable reads, which ensures that data read multiple times within the same transaction remains consistent.
     *    **Example:**
-        ```sql
+    ```sql
         BEGIN;
           SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
         
@@ -35,7 +35,7 @@ This section outlines the transaction examples demonstrated in the `transactions
           VALUES (1, 1, 1, 100.00);
         
         COMMIT;
-        ```
+    ```
 
 3.  **Transaction with Rollback due to Payment Failure:**
     *   **Functionality:** This transaction adds a new order and simulates a payment failure, rolling back the order insertion.
