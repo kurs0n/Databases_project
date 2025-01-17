@@ -462,11 +462,11 @@ These triggers work automatically in the background; no direct calls are needed.
     ```
 
 2.  **Updating Inventory on New Order:**
-    ```sql
+  ```sql
    -- Insert a new order and it will decrease the inventory if new record in order table has `product_id` and `size` fields
    INSERT INTO Orders(customer_id, order_date, status, product_id, size) VALUES (1, CURRENT_DATE, 'Pending', 1, 'M')
    -- This will trigger decrement of quantity of product with id = 1 and size = M
-    ```
+  ```
 
 3.  **Updating Invoice `updated_at`:**
     ```sql
