@@ -214,5 +214,3 @@ This section outlines the transaction examples demonstrated in the `transactions
 
 
 These examples serve as a guide on how to structure transactions in your application code, to ensure that data changes are grouped into atomic operations, and are performed correctly using different isolation levels.
-
-
