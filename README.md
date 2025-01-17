@@ -356,8 +356,137 @@ SELECT c.name, SUM(p.amount) AS total_spent FROM customers c
 JOIN orders o  USING(customer_id) JOIN payments p USING(order_id)
 GROUP BY c.customer_id ORDER BY total_spent DESC LIMIT 1;
 ```
-...
 
+## Database Stored Procedures (Functions)
 
+This section outlines the functionality and provides usage examples for the stored procedures (functions) created for the database. These functions encapsulate common database operations, making them reusable and efficient.
 
+### Functionality
 
+These stored procedures provide the following functionalities:
+
+1.  **`calculate_average_rating(product_id_input INT)`:**
+    *   Calculates the average rating for a specified product.
+    *   Useful for displaying product ratings on your application.
+
+2.  **`calculate_order_total(order_id_input INT)`:**
+    *   Calculates the total amount for a given order.
+    *   Helpful for summarizing order costs.
+
+3.  **`get_products_by_category(category_name_input VARCHAR)`:**
+    *   Retrieves all products belonging to a specific category.
+    *   Useful for filtering and displaying products by category.
+
+4.  **`get_customer_orders(customer_id_input INT)`:**
+    *   Retrieves all orders placed by a specific customer.
+    *   Helpful for displaying customer order history.
+
+5.  **`get_invoice_details(invoice_id_input INT)`:**
+    *   Retrieves detailed information for a specific invoice, including customer details and addresses.
+    *   Useful for generating invoice reports or displaying invoice summaries.
+
+### Usage Examples
+
+Here are examples of how to use these stored procedures:
+
+1.  **Calculating Average Rating:**
+    ```sql
+    SELECT calculate_average_rating(1); -- Replace 1 with the actual product ID
+    ```
+    This will return the average rating of product with `product_id` of `1`.
+
+2.  **Calculating Order Total:**
+    ```sql
+    SELECT calculate_order_total(1); -- Replace 1 with the actual order ID
+    ```
+    This will return the total amount of order with `order_id` of `1`.
+
+3.  **Getting Products by Category:**
+    ```sql
+    SELECT * FROM get_products_by_category('Clothing'); -- Replace 'Clothing' with the actual category
+    ```
+    This will return all products that belong to the `Clothing` category.
+
+4.  **Getting Customer Orders:**
+      ```sql
+      SELECT * FROM get_customer_orders(1); -- Replace 1 with the actual customer ID
+     ```
+     This will return all orders that are associated to the customer with `customer_id` of `1`
+
+5.  **Getting Invoice Details:**
+    ```sql
+    SELECT * FROM get_invoice_details(1); -- Replace 1 with the actual invoice ID
+    ```
+     This will return the invoice details for invoice with `invoice_id` of `1`.
+
+### Benefits
+
+*   **Reusability:** These functions can be called from various parts of your application, reducing code duplication.
+*   **Maintainability:** Changes to common database operations can be made in a single place.
+*   **Efficiency:** Server-side logic can be more efficient than fetching data and then processing it in the application.
+*   **Simplicity:** Using procedures allows for simpler queries in your app code, as most of the logic is encapsulated within the procedures.
+
+## Database Triggers
+
+This section describes the database triggers created for the database. These triggers automatically execute specific actions when certain events occur, helping to maintain data integrity and automate tasks.
+
+### Trigger Functionality
+
+These triggers provide the following functionalities:
+
+1.  **`update_lowest_price_trigger`:**
+    *   **Function:**  Automatically updates the `lowest_price_30` column in the `Products` table whenever a product's `actual_price` is updated to a lower value.
+    *   **Use Case:** Ensures the database tracks the lowest price of a product in the last 30 days, updating this value in real-time.
+
+2.  **`update_inventory_on_order_trigger`:**
+    *   **Function:** Automatically decreases the `stock_quantity` of a product in the `Inventory` table whenever a new order is created or updated, assuming a one-to-one relationship between order items and inventory.
+    *   **Use Case:** Automatically manages inventory levels as new orders are placed, ensuring stock records are up-to-date.
+
+3.  **`set_updated_at_trigger`:**
+    *   **Function:** Automatically sets the `updated_at` timestamp in the `Invoices` table whenever an invoice record is updated.
+    *   **Use Case:** Keeps a record of when an invoice was last modified, ensuring timestamps are updated consistently.
+
+4.  **`prevent_duplicate_opinions_trigger`:**
+    *   **Function:** Prevents customers from adding multiple opinions for the same product.
+    *   **Use Case:** Ensures that each customer can leave only one opinion for a specific product, maintaining the quality and authenticity of opinions.
+
+### Usage Examples
+
+These triggers work automatically in the background; no direct calls are needed. Below are examples that illustrate how these triggers work through normal operations:
+
+1.  **Updating the Lowest Price:**
+    ```sql
+    -- Update the actual price of a product to trigger the lowest_price_30 update.
+    UPDATE Products SET actual_price = 10.00 WHERE product_id = 1;
+    -- This update will trigger the update of the lowest_price_30 field
+    ```
+
+2.  **Updating Inventory on New Order:**
+    ```sql
+   -- Insert a new order and it will decrease the inventory if new record in order table has `product_id` and `size` fields
+   INSERT INTO Orders(customer_id, order_date, status, product_id, size) VALUES (1, CURRENT_DATE, 'Pending', 1, 'M')
+   -- This will trigger decrement of quantity of product with id = 1 and size = M
+    ```
+
+3.  **Updating Invoice `updated_at`:**
+    ```sql
+    -- Update an existing invoice to trigger the updated_at timestamp update.
+    UPDATE Invoices SET status = 'Paid' WHERE invoice_id = 1;
+    -- This will trigger an update to updated_at column
+    ```
+
+4.  **Preventing Duplicate Opinions:**
+    ```sql
+      -- inserting opinions
+     INSERT INTO Opinions(product_id, customer_id, rating) VALUES (1,1,5); -- this one is ok
+     INSERT INTO Opinions(product_id, customer_id, rating) VALUES (1,1,1); -- this one will fail
+    -- The second insert operation will raise an exception and prevent duplicate opinion
+    ```
+
+### Benefits
+
+*   **Automation:** Triggers automate tasks that would otherwise require manual intervention.
+*   **Data Integrity:** Triggers help enforce data integrity by applying rules automatically before or after changes to the database.
+*   **Consistency:** Triggers help maintain consistency across different parts of the database.
+*   **Real-Time Updates:** Triggers perform updates in real-time without requiring application intervention.
+*   **Code Simplification:** Triggers encapsulate data logic, reducing complexity in application code.
