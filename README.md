@@ -260,7 +260,7 @@ Ocenie podlega zarówno współpraca zespołowa, jak i indywidualny wkład.
 
 ## Diagram ERD
 
-![base](https://github.com/user-attachments/assets/3b02640a-3e8d-4044-8198-afb12b3b208c)
+![Bazy danych (2)](https://github.com/user-attachments/assets/b7668a57-048d-4120-af5c-3def63634eb5)
 
 ## Views for the Database
 
